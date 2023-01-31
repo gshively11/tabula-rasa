@@ -1,0 +1,19 @@
+{
+  "name": "tabula-rasa",
+  "version": "0.0.1",
+  "description": "A generic web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gshively11/tabula-rasa.git"
+  },
+  "author": "gshively11@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gshively11/tabula-rasa/issues"
+  },
+  "homepage": "https://github.com/gshively11/tabula-rasa#readme"
+}
