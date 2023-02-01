@@ -1,0 +1,42 @@
+---
+import { SITE, AIBLOG } from '~/config.mjs'
+
+import Layout from '~/layouts/PageLayout.astro'
+import BlogList from '~/components/aiblog/List.astro'
+import Headline from '~/components/aiblog/Headline.astro'
+import Pagination from '~/components/aiblog/Pagination.astro'
+
+import { fetchPosts } from '~/utils/aiblog'
+import { AIBLOG_LANDING_RELATIVE } from '~/utils/links'
+
+export async function getStaticPaths({ paginate }) {
+  if (AIBLOG?.disabled || AIBLOG?.landing?.disabled) return []
+
+  return paginate(await fetchPosts(), {
+    params: { blog: AIBLOG_LANDING_RELATIVE || undefined },
+    pageSize: AIBLOG.postsPerPage,
+  })
+}
+
+const { page } = Astro.props
+const currentPage = page.currentPage ?? 1
+
+const meta = {
+  title: `AI Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
+  description: SITE.description,
+  noindex: AIBLOG?.landing?.noindex || currentPage > 1,
+  ogType: 'blog',
+}
+---
+
+<Layout {meta}>
+  <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline
+      subtitle="An AI-generated blog with random content, powered by OpenAI Davinci and DALL·E."
+    >
+      AI-generated Blog
+    </Headline>
+    <BlogList posts={page.data} />
+    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  </section>
+</Layout>

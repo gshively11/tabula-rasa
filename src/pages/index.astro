@@ -1,0 +1,90 @@
+---
+import { SITE } from '~/config.mjs'
+import Layout from '~/layouts/PageLayout.astro'
+
+import Hero from '~/components/widgets/Hero.astro'
+import Note from '~/components/widgets/Note.astro'
+import Features from '~/components/widgets/Features.astro'
+import CallToAction from '~/components/widgets/CallToAction.astro'
+
+const meta = {
+  title: SITE.title,
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+}
+---
+
+<Layout {meta}>
+  <Hero image={{ src: import('~/assets/images/main.jpg'), alt: 'Grant Shively and the Boys' }}>
+    <Fragment slot="title">
+      <span class="hidden lg:inline"> Hello There</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        My name is <span class="font-semibold text-purple-800 dark:text-purple-300"
+          >Grant Shively</span
+        >, and I'm a full-stack software engineer
+        <br class="2xl:hidden" />
+        with 14 years of experience.
+      </span>
+    </Fragment>
+  </Hero>
+
+  <Note />
+
+  <Features
+    title="A few highlights"
+    subtitle="Here are some things I bring to the table"
+    highlight="Skills"
+    items={[
+      {
+        title: 'Distributed Systems',
+        description:
+          'Architecting and implementing multi-region distributed systems in cloud environments.',
+        icon: 'flat-color-icons:services',
+      },
+      {
+        title: 'Polyglot',
+        description:
+          'Professional experience in a number of languages, including JavaScript, Go, Python, Ruby, C#, PHP, and Perl.',
+        icon: 'flat-color-icons:command-line',
+      },
+      {
+        title: 'DevOps Mindset',
+        description:
+          'Provisioning and maintaining infrastructure as well as writing the software that runs on it.',
+        icon: 'flat-color-icons:automatic',
+      },
+      {
+        title: 'Technical Leadership',
+        description:
+          'Increasing team productivity through exceptional technical leadership and mentorship.',
+        icon: 'flat-color-icons:conference-call',
+      },
+      {
+        title: 'Communication & Empathy',
+        description:
+          'Whether verbally or in writing, communicating clearly and with empathy to ensure effective collaboration.',
+        icon: 'flat-color-icons:collaboration',
+      },
+      {
+        title: 'Tenacity',
+        description: 'Pursuing solutions to challenging problems until everyone is satisified.',
+        icon: 'flat-color-icons:collect',
+      },
+    ]}
+  />
+
+  <CallToAction
+    callToAction={{
+      text: 'Projects',
+      href: '#',
+      icon: 'tabler:briefcase',
+    }}
+  >
+    <Fragment slot="title">Do you want to know more?</Fragment>
+
+    <Fragment slot="subtitle">Check out some of my work.</Fragment>
+  </CallToAction>
+</Layout>
