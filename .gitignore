@@ -105,3 +105,9 @@ dist
 
 # vim
 *.sw[pon]
+
+# astro
+.astro
+
+# scratchpad for dev thoughts
+SCRATCH.md

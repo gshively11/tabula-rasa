@@ -1,0 +1,39 @@
+---
+import { AIBLOG } from '~/config.mjs'
+
+import Layout from '~/layouts/PageLayout.astro'
+import SinglePost from '~/components/aiblog/SinglePost.astro'
+import ToBlogLink from '~/components/aiblog/ToBlogLink.astro'
+
+import { getCanonical } from '~/utils/links'
+import { fetchPosts } from '~/utils/aiblog'
+import { findImage } from '~/utils/images'
+
+export async function getStaticPaths() {
+  if (AIBLOG?.disabled || AIBLOG?.post?.disabled) return []
+
+  return (await fetchPosts()).map((post) => ({
+    params: {
+      blog: post.relativeLink,
+    },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const url = getCanonical(post.absoluteLink)
+
+const meta = {
+  title: post.title,
+  description: post.description,
+  canonical: post.canonical || url,
+  image: await findImage(post.image),
+  noindex: AIBLOG?.post?.noindex,
+  ogType: 'article',
+}
+---
+
+<Layout {meta}>
+  <SinglePost post={{ ...post, image: meta.image }} url={url} />
+  <ToBlogLink />
+</Layout>
