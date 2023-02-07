@@ -2,6 +2,7 @@
 const {
   title = await Astro.slots.render('default'),
   subtitle = await Astro.slots.render('subtitle'),
+  disclaimer = true,
 } = Astro.props
 ---
 
@@ -16,6 +17,14 @@ const {
         class="mt-2 md:mt-3 mx-auto text-xl text-gray-500 dark:text-slate-400 font-medium"
         set:html={subtitle}
       />
+    )
+  }
+  {
+    disclaimer && (
+      <div class="mt-5 md:mt-7 text-sm italic text-gray-500">
+        Disclaimer: All images and content are auto-generated and auto-published. They may contain
+        inaccurate or offensive material. None of this material has been reviewed or approved by me.
+      </div>
     )
   }
 </header>

@@ -1,6 +1,6 @@
 # tabula-rasa
 
-A generic web application
+A website about me.
 
 ## Sources & Inspiration
 

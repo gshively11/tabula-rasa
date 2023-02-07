@@ -1,19 +1,19 @@
 ---
-import { Icon } from 'astro-icon';
-import { Picture } from '@astrojs/image/components';
+import { Icon } from 'astro-icon'
+import { Picture } from '@astrojs/image/components'
 
 interface CallToAction {
-  text: string;
-  href: string;
-  icon?: string;
+  text: string
+  href: string
+  icon?: string
 }
 
 export interface Props {
-  title?: string;
-  subtitle?: string;
-  callToAction?: string | CallToAction;
-  callToAction2?: string | CallToAction;
-  image?: string | any; // TODO: find HTMLElementProps
+  title?: string
+  subtitle?: string
+  callToAction?: string | CallToAction
+  callToAction2?: string | CallToAction
+  image?: string | any
 }
 
 const {
@@ -23,7 +23,7 @@ const {
   callToAction = await Astro.slots.render('callToAction'),
   callToAction2 = await Astro.slots.render('callToAction2'),
   image = await Astro.slots.render('image'),
-} = Astro.props;
+} = Astro.props
 ---
 
 <section class="relative md:-mt-[76px]">
@@ -41,15 +41,26 @@ const {
           )
         }
         <div class="max-w-3xl mx-auto">
-          {subtitle && <p class="text-xl text-muted mb-6 dark:text-slate-300" set:html={subtitle} />}
-          <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4">
+          {
+            subtitle && (
+              <p class="text-xl text-muted mb-6 dark:text-slate-300" set:html={subtitle} />
+            )
+          }
+          <div
+            class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4"
+          >
             {
               callToAction && (
                 <div class="flex w-full sm:w-auto">
                   {typeof callToAction === 'string' ? (
                     <Fragment set:html={callToAction} />
                   ) : (
-                    <a class="btn btn-primary sm:mb-0 w-full" href={callToAction?.href} target="_blank" rel="noopener">
+                    <a
+                      class="btn btn-primary sm:mb-0 w-full"
+                      href={callToAction?.href}
+                      target="_blank"
+                      rel="noopener"
+                    >
                       {callToAction?.icon && (
                         <>
                           <Icon name={callToAction.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}
