@@ -5,6 +5,7 @@ const post = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     image: z.string().optional(),
+    imageDescription: z.string().optional(),
 
     canonical: z.string().url().optional(),
 

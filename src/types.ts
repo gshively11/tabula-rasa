@@ -7,6 +7,7 @@ export interface Post {
   description?: string
 
   image?: string
+  imageDescription?: string
 
   canonical?: string | URL
   relativeLink?: string

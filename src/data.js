@@ -1,7 +1,7 @@
 import { getAbsoluteLink } from './utils/links'
 
 const meLinks = {
-  text: 'Me',
+  text: 'Socials',
   links: [
     {
       text: 'Github',
@@ -18,12 +18,12 @@ const projectLinks = {
   text: 'Projects',
   links: [
     {
-      text: 'AI-genearted Blog',
-      href: getAbsoluteLink('/projects/ai_blog/blog'),
+      text: 'Summary',
+      href: getAbsoluteLink('/projects/summary'),
     },
     {
-      text: 'Buy A Random Meme',
-      href: getAbsoluteLink('/projects/buy_a_random_meme'),
+      text: 'AI-genearted Blog',
+      href: getAbsoluteLink('/projects/ai_blog/blog'),
     },
     {
       text: 'The Button',
@@ -32,8 +32,19 @@ const projectLinks = {
   ],
 }
 
+// Change the name the Summary page to Projects for the footer
+const projectFooterLinks = { ...projectLinks, links: [...projectLinks.links] }
+projectFooterLinks.links[0] = { ...projectFooterLinks.links[0], text: 'Projects' }
+
 export const headerData = {
-  links: [meLinks, projectLinks],
+  links: [
+    {
+      text: 'Home',
+      href: getAbsoluteLink('/'),
+    },
+    projectLinks,
+    meLinks,
+  ],
   actions: [
     {
       type: 'button',
@@ -44,16 +55,18 @@ export const headerData = {
 }
 
 export const footerData = {
-  links: [meLinks, projectLinks],
-  secondaryLinks: [
-    { text: 'Terms', href: getAbsoluteLink('/terms') },
-    { text: 'Privacy Policy', href: getAbsoluteLink('/privacy') },
-  ],
+  links: [projectFooterLinks, meLinks],
+  secondaryLinks: [],
   socialLinks: [
     {
       ariaLabel: 'Github',
       icon: 'tabler:brand-github',
       href: 'https://github.com/gshively11',
+    },
+    {
+      ariaLabel: 'LinkedIn',
+      icon: 'tabler:brand-linkedin',
+      href: 'https://linkedin.com/in/grant-shively',
     },
   ],
   footNote: `

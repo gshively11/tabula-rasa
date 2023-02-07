@@ -1,6 +1,7 @@
 ---
 import { SITE } from '~/config.mjs'
 import Layout from '~/layouts/PageLayout.astro'
+import { getAbsoluteLink } from '~/utils/links'
 
 import Hero from '~/components/widgets/Hero.astro'
 import Note from '~/components/widgets/Note.astro'
@@ -17,14 +18,14 @@ const meta = {
 <Layout {meta}>
   <Hero image={{ src: import('~/assets/images/main.jpg'), alt: 'Grant Shively and the Boys' }}>
     <Fragment slot="title">
-      <span class="hidden lg:inline"> Hello There</span>
+      <span class="lg:inline"> Hello There</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
+      <span class="sm:inline">
         My name is <span class="font-semibold text-purple-800 dark:text-purple-300"
           >Grant Shively</span
-        >, and I'm a full-stack software engineer
+        >,<br class="sm:hidden" /> and I'm a full-stack software engineer
         <br class="2xl:hidden" />
         with 14 years of experience.
       </span>
@@ -41,7 +42,7 @@ const meta = {
       {
         title: 'Distributed Systems',
         description:
-          'Architecting and implementing multi-region distributed systems in cloud environments.',
+          'Architecting and implementing reliable multi-region distributed systems in cloud environments.',
         icon: 'flat-color-icons:services',
       },
       {
@@ -70,7 +71,8 @@ const meta = {
       },
       {
         title: 'Tenacity',
-        description: 'Pursuing solutions to challenging problems until everyone is satisified.',
+        description:
+          'Overcoming all obstacles in the pursuit of solutions to challenging problems.',
         icon: 'flat-color-icons:collect',
       },
     ]}
@@ -79,7 +81,7 @@ const meta = {
   <CallToAction
     callToAction={{
       text: 'Projects',
-      href: '#',
+      href: getAbsoluteLink('/projects/summary'),
       icon: 'tabler:briefcase',
     }}
   >
