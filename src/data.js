@@ -22,7 +22,7 @@ const projectLinks = {
       href: getAbsoluteLink('/projects/summary'),
     },
     {
-      text: 'AI-genearted Blog',
+      text: 'AI-generated Blog',
       href: getAbsoluteLink('/projects/ai_blog/blog'),
     },
     {

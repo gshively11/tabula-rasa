@@ -104,12 +104,7 @@ const {
                 {typeof callToAction === 'string' ? (
                   <Fragment set:html={callToAction} />
                 ) : (
-                  <a
-                    class="btn btn-primary sm:mb-0"
-                    href={callToAction?.href}
-                    target="_blank"
-                    rel="noopener"
-                  >
+                  <a class="btn btn-primary sm:mb-0" href={callToAction?.href}>
                     {callToAction?.icon && (
                       <>
                         <Icon name={callToAction.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}
@@ -127,7 +122,7 @@ const {
                 {typeof callToAction2 === 'string' ? (
                   <Fragment set:html={callToAction2} />
                 ) : (
-                  <a class="btn" href={callToAction2?.href}>
+                  <a rel="noopener" target="_blank" class="btn" href={callToAction2?.href}>
                     {callToAction2?.icon && (
                       <>
                         <Icon name={callToAction2.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}

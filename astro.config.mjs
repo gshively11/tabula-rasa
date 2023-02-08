@@ -1,18 +1,17 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-
 import compress from 'astro-compress'
 import image from '@astrojs/image'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import { defineConfig } from 'astro/config'
-
 import { SITE } from './src/config.mjs'
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs'
-
+import node from '@astrojs/node'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// https://astro.build/config
 export default defineConfig({
   base: SITE.basePathname,
   integrations: [
@@ -40,7 +39,7 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],
   },
-  output: 'static',
+  output: 'server',
   site: SITE.origin,
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
   vite: {
@@ -50,4 +49,7 @@ export default defineConfig({
       },
     },
   },
+  adapter: node({
+    mode: 'middleware',
+  }),
 })

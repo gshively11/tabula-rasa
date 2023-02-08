@@ -111,3 +111,6 @@ dist
 
 # scratchpad for dev thoughts
 SCRATCH.md
+
+# dist for second build step
+dist_node
