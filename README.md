@@ -10,14 +10,15 @@ A profile for Grant Shively, hosted at [ihopethis.works](https://ihopethis.works
 
 ### Run Directly on Host Machine
 
-- `npm run dev`: Start in dev mode with live reload.
-- `npm run build`: Build.
-- `npm run start`: Start using the last build.
+- `npm run dev`: Start the project in dev mode with live reload.
+- `npm run build`: Build the project.
+- `npm run start`: Start the project using the last build.
 
 ### Run on Docker
 
-- `make build`: Build the docker image.
-- `make run`: Run the docker image.
+- `make build`: Build the final docker image.
+- `make test`: Build the base docker image and run tests.
+- `make run`: Run the final docker image.
 
 ### Deploy
 

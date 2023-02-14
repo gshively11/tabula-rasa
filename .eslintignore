@@ -1,4 +1,6 @@
 .github
 dist
+dist_node
 node_modules
 types.generated.d.ts
+env.d.ts

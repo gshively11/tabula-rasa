@@ -1,3 +1,6 @@
 dist
 node_modules
 .github
+# for some reason, this file is throw an unexpected token lint error,
+# but there does not appear to be any invalid code
+src/components/common/BasicScripts.astro
