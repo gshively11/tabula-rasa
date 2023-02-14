@@ -13,7 +13,8 @@
     "astro": "astro",
     "subfont": "subfont -ir --no-fallbacks --silent --root dist",
     "generate-blog-post": "node scripts/generate-ai-blog-post.mjs",
-    "deploy": "fly deploy"
+    "deploy": "fly deploy",
+    "test": "eslint . && astro check"
   },
   "repository": {
     "type": "git",

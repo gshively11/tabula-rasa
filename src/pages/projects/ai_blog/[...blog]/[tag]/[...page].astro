@@ -1,6 +1,8 @@
 ---
 export const prerender = true
 
+import type { GetStaticPathsOptions, GetStaticPathsResult } from 'astro'
+
 import { SITE, AIBLOG } from '~/config.mjs'
 
 import Layout from '~/layouts/PageLayout.astro'
@@ -11,7 +13,9 @@ import { fetchPosts } from '~/utils/aiblog'
 import { AIBLOG_TAG_RELATIVE } from '~/utils/links'
 import Headline from '~/components/aiblog/Headline.astro'
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({
+  paginate,
+}: GetStaticPathsOptions): Promise<GetStaticPathsResult[]> {
   if (AIBLOG?.disabled || AIBLOG?.tag?.disabled) return []
 
   const posts = await fetchPosts()
@@ -20,13 +24,13 @@ export async function getStaticPaths({ paginate }) {
     Array.isArray(post.tags) && post.tags.map((tag) => tags.add(tag.toLowerCase()))
   })
 
-  return Array.from(tags).map((tag: string) =>
+  return Array.from(tags).map((tag) =>
     paginate(
       posts.filter(
         (post) => Array.isArray(post.tags) && post.tags.find((elem) => elem.toLowerCase() === tag)
       ),
       {
-        params: { tag: tag, blog: AIBLOG_TAG_RELATIVE || undefined },
+        params: { tag: `${tag}`, blog: AIBLOG_TAG_RELATIVE || undefined },
         pageSize: AIBLOG.postsPerPage,
         props: { tag },
       }

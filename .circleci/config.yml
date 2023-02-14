@@ -1,0 +1,69 @@
+version: 2.1
+
+jobs:
+  publish_blog_post:
+    docker:
+      - image: cimg/node:current
+    steps:
+      - checkout
+      - run:
+          name: "Generate blog post"
+          command: "npm run generate-blog-post"
+      - run:
+          name: "Commit and push"
+          command: |
+            git add --a
+            git commit -m 'circleci: added new blog post'
+            git push
+  test_and_build:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+      - checkout
+      - run:
+          name: "Test"
+          command: "make test"
+      - run:
+          name: "Build"
+          command: "make build"
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  deploy:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - attach_workspace:
+         at: ~/project
+      - run:
+          name: "Install flyctl"
+          command: "curl -L https://fly.io/install.sh | sh"
+      - run:
+          name: "Deploy"
+          command: "fly deploy"
+
+workflows:
+  app:
+    jobs:
+      - test_and_build
+      - deploy:
+          requires:
+            - test_and_build
+          filters:
+            branches:
+              only: main
+
+weekly_blog_post:
+  when:
+    - equal: [ weekly_blog_post, << pipeline.scheduled.name >> ]
+  jobs:
+    - publish_blog_post
+    - test_and_build:
+        requires:
+          - publish_blog_post
+    - deploy:
+        requires:
+          - test_and_build
