@@ -27,7 +27,7 @@ processes = []
     grace_period = "5s"
     method = "get"
     path = "/"
-    protocol = "https"
+    protocol = "http"
     restart_limit = 2
     timeout = "2s"
 
