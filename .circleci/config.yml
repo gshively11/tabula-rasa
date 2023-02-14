@@ -43,13 +43,15 @@ jobs:
           command: "curl -L https://fly.io/install.sh | sh"
       - run:
           name: "Deploy"
-          command: "fly deploy"
+          command: "FLY_ACCESS_TOKEN=$flyio_api_token fly deploy"
 
 workflows:
   app:
     jobs:
       - test_and_build
       - deploy:
+          context:
+            - flyio
           requires:
             - test_and_build
           filters:
@@ -65,5 +67,7 @@ weekly_blog_post:
         requires:
           - publish_blog_post
     - deploy:
+        context:
+          - flyio
         requires:
           - test_and_build
