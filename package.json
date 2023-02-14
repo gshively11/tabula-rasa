@@ -8,11 +8,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && tsc -p tsconfig.node.json",
-    "start": "node ./dist_node/index.js",
+    "start": "node --max-old-space-size=200 ./dist_node/index.js",
     "preview": "astro preview",
     "astro": "astro",
     "subfont": "subfont -ir --no-fallbacks --silent --root dist",
-    "generate-blog-post": "node scripts/generate-ai-blog-post.mjs"
+    "generate-blog-post": "node scripts/generate-ai-blog-post.mjs",
+    "deploy": "fly deploy"
   },
   "repository": {
     "type": "git",
@@ -37,6 +38,7 @@
     "@types/node": "^18.13.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
+    "@typescript/analyze-trace": "^0.9.1",
     "astro": "^2.0.9",
     "astro-compress": "^1.1.28",
     "astro-icon": "^0.8.0",
@@ -59,12 +61,12 @@
     "node": ">=16.12.0"
   },
   "dependencies": {
-    "@astrojs/image": "^0.14.0",
+    "@astrojs/image": "npm:astrojs-image-ssr-fix@^1.0.1",
     "@astrojs/node": "^5.0.3",
-    "@astrojs/image": "^0.14.0",
     "express": "^4.18.2",
     "limax": "^2.1.0",
     "openai": "^3.1.0",
+    "rollup": "^2.0.0",
     "sharp": "^0.31.3",
     "svgo": "^2.8.0"
   }
