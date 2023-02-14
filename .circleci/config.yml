@@ -43,7 +43,7 @@ jobs:
           command: "curl -L https://fly.io/install.sh | sh"
       - run:
           name: "Deploy"
-          command: "FLY_ACCESS_TOKEN=$flyio_api_token fly deploy"
+          command: "FLY_ACCESS_TOKEN=$flyio_api_token /home/circleci/.fly/bin/flyctl deploy"
 
 workflows:
   app:
