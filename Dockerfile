@@ -27,7 +27,7 @@ RUN npm prune --production
 ##
 # Final stage
 #
-FROM node:19-alpine
+FROM node:19-alpine as app
 
 # Add curl because it's useful
 RUN apk add --no-cache curl

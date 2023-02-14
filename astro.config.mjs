@@ -9,6 +9,8 @@ import { defineConfig } from 'astro/config'
 import { SITE } from './src/config.mjs'
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs'
 import node from '@astrojs/node'
+
+// absolute path of the directory that houses this file
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://astro.build/config

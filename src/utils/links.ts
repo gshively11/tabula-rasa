@@ -1,3 +1,7 @@
+/**
+ * A helper for retrieving common links and generating new links.
+ */
+
 import slugify from 'limax'
 
 import { SITE, AIBLOG } from '~/config.mjs'
@@ -16,6 +20,9 @@ const createPath = (...params: string[]) => {
   return '/' + paths + (SITE.trailingSlash && paths ? '/' : '')
 }
 
+/**
+ * Cleans slugs to ensure they only contain URL-friendly characters
+ */
 export const cleanSlug = (text = '') =>
   trimSlash(text)
     .split('/')

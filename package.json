@@ -1,7 +1,7 @@
 {
   "name": "tabula-rasa",
   "version": "0.0.1",
-  "description": "A website about me.",
+  "description": "A profile for Grant Shively.",
   "private": true,
   "main": "dist/index.js",
   "type": "module",

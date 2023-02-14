@@ -3,6 +3,9 @@ import type { CollectionEntry } from 'astro:content'
 import type { Post } from '~/types'
 import { cleanSlug, getAbsoluteLink, getRelativeLink, trimSlash } from './links'
 
+/**
+ * Generates a slug for a post and injects date information as needed
+ */
 const generatePostSlug = async ({ id, slug, publishDate, category }) => {
   const year = String(publishDate.getFullYear()).padStart(4, '0')
   const month = String(publishDate.getMonth() + 1).padStart(2, '0')
@@ -28,6 +31,10 @@ const generatePostSlug = async ({ id, slug, publishDate, category }) => {
     .join('/')
 }
 
+/**
+ * Normalizes an astro collection entry for post to the Post interface,
+ * adding tags, category, author, and a slug.
+ */
 const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> => {
   const { id, slug: rawSlug = '', data } = post
   const { Content, remarkPluginFrontmatter } = await post.render()
@@ -35,7 +42,7 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   const {
     tags: rawTags = [],
     category: rawCategory,
-    author = 'Anonymous',
+    author = 'OpenAI Davinci',
     publishDate: rawPublishDate = new Date(),
     ...rest
   } = data
@@ -66,6 +73,9 @@ const getNormalizedPost = async (post: CollectionEntry<'post'>): Promise<Post> =
   }
 }
 
+/**
+ * Gets an astro collection for posts and normalizes them into Post interfaces.
+ */
 const load = async function (): Promise<Array<Post>> {
   const posts = await getCollection('post')
   const normalizedPosts = posts.map(async (post) => await getNormalizedPost(post))
@@ -79,6 +89,9 @@ const load = async function (): Promise<Array<Post>> {
 
 let _posts: Array<Post>
 
+/**
+ * Loads posts once and caches posts in memory
+ */
 export const fetchPosts = async (): Promise<Array<Post>> => {
   if (!_posts) {
     _posts = await load()
@@ -87,6 +100,9 @@ export const fetchPosts = async (): Promise<Array<Post>> => {
   return _posts
 }
 
+/**
+ * Retrieves Post(s) by their slug(s)
+ */
 export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post>> => {
   if (!Array.isArray(slugs)) return []
 
@@ -100,6 +116,9 @@ export const findPostsBySlugs = async (slugs: Array<string>): Promise<Array<Post
   }, [])
 }
 
+/**
+ * Retrieves Post(s) by their id(s)
+ */
 export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> => {
   if (!Array.isArray(ids)) return []
 
@@ -113,6 +132,9 @@ export const findPostsByIds = async (ids: Array<string>): Promise<Array<Post>> =
   }, [])
 }
 
+/**
+ * Gets the n number of latest posts, defaulting to the latest 4
+ */
 export const findLatestPosts = async ({ count }: { count?: number }): Promise<Array<Post>> => {
   const _count = count || 4
   const posts = await fetchPosts()

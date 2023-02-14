@@ -1,3 +1,7 @@
+/**
+ * Data used throughout the app, centralized in this file to make it easier to manage.
+ */
+
 import { getAbsoluteLink } from './utils/links'
 
 const meLinks = {
@@ -32,7 +36,7 @@ const projectLinks = {
   ],
 }
 
-// Change the name the Summary page to Projects for the footer
+// Change the name the Summary page to Projects for the footer.
 const projectFooterLinks = { ...projectLinks, links: [...projectLinks.links] }
 projectFooterLinks.links[0] = { ...projectFooterLinks.links[0], text: 'Projects' }
 
@@ -70,6 +74,6 @@ export const footerData = {
     },
   ],
   footNote: `
-    Made by Grant Shively, inspired by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://github.com/onwidget/astrowind"> Astrowind</a> · All rights reserved.
+    Made by Grant Shively, inspired by <a class="text-blue-600 hover:underline dark:text-gray-200" target="_blank" href="https://github.com/onwidget/astrowind"> Astrowind</a> · All rights reserved.
   `,
 }
