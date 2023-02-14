@@ -1,7 +1,7 @@
 ---
 export const prerender = true
 
-import type { GetStaticPathsOptions, GetStaticPathsResult } from 'astro'
+import type { GetStaticPathsOptions } from 'astro'
 
 import { SITE, AIBLOG } from '~/config.mjs'
 
@@ -13,9 +13,7 @@ import { fetchPosts } from '~/utils/aiblog'
 import { AIBLOG_TAG_RELATIVE } from '~/utils/links'
 import Headline from '~/components/aiblog/Headline.astro'
 
-export async function getStaticPaths({
-  paginate,
-}: GetStaticPathsOptions): Promise<GetStaticPathsResult[]> {
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   if (AIBLOG?.disabled || AIBLOG?.tag?.disabled) return []
 
   const posts = await fetchPosts()
