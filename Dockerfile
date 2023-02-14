@@ -18,7 +18,8 @@ RUN npm install
 COPY . .
 
 # build the app
-RUN npm run build
+RUN npx astro build
+RUN npx tsc -p tsconfig.node.json
 
 # remove the dev dependencies
 RUN npm prune --production
@@ -39,4 +40,4 @@ COPY --from=builder /home/node/app /home/node/app/
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "--max-old-space-size=200", "./dist_node/index.js"]

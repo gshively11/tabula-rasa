@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["esnext"],
@@ -11,5 +12,5 @@
     "strict": true,
     "target": "es2022"
   },
-  "include": ["index.ts"]
+  "files": ["index.ts"]
 }
