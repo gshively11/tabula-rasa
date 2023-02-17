@@ -56,7 +56,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 USER node
 
 # copy the dependencies and dists from the builder stage
-COPY --from=pruner /home/node/app /home/node/app/
+COPY --from=pruner --chown=node /home/node/app /home/node/app/
 
 EXPOSE 3000
 
