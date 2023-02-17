@@ -114,3 +114,6 @@ SCRATCH.md
 
 # dist for second build step
 dist_node
+
+# sqlite db
+default.db

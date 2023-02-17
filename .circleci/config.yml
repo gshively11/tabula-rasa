@@ -47,6 +47,9 @@ jobs:
 
 workflows:
   app:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - test_and_build
       - deploy:
@@ -57,17 +60,16 @@ workflows:
           filters:
             branches:
               only: main
-
-weekly_blog_post:
-  when:
-    - equal: [ weekly_blog_post, << pipeline.scheduled.name >> ]
-  jobs:
-    - publish_blog_post
-    - test_and_build:
-        requires:
-          - publish_blog_post
-    - deploy:
-        context:
-          - flyio
-        requires:
-          - test_and_build
+  weekly_blog_post:
+    when:
+      equal: [ weekly_blog_post, << pipeline.schedule.name >> ]
+    jobs:
+      - publish_blog_post
+      - test_and_build:
+          requires:
+            - publish_blog_post
+      - deploy:
+          context:
+            - flyio
+          requires:
+            - test_and_build
