@@ -12,5 +12,13 @@
     "strict": true,
     "target": "es2022"
   },
-  "files": ["index.ts"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/assets",
+    "src/components",
+    "src/content",
+    "src/layouts",
+    "src/pages",
+    "src/utils"
+  ]
 }

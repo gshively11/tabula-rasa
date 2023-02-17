@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Identity {
+  id String @id @default(uuid())
+  aspects IdentityAspect[]
+  user User?
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  organizationPlans OrganizationPlanIdentity[]
+  organizationalUnits OrganizationalUnit[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+}
+
+model IdentityAspect {
+  id String @id @default(uuid())
+  type String
+  value String
+  authenticatable Boolean @default(false)
+  identity Identity @relation(fields: [identityId], references: [id])
+  identityId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+
+  @@unique([type, value])
+}
+
+model Organization {
+  id String @id @default(uuid())
+  identities Identity[]
+  organizationalUnits OrganizationalUnit[]
+  plans OrganizationPlan[]
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+}
+
+model OrganizationalUnit {
+  id String @id @default(uuid())
+  name String
+  description String
+  identities Identity[]
+  organization Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  parentId String?
+  parent OrganizationalUnit? @relation("OrganizationalUnits", fields: [parentId], references: [id])
+  children OrganizationalUnit[] @relation("OrganizationalUnits")
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+
+  @@unique([name, organizationId])
+}
+
+model Plan {
+  id String @id @default(uuid())
+  type String
+  organizations OrganizationPlan[]
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+
+  @@index([type])
+}
+
+model OrganizationPlan {
+  organization Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  plan Plan @relation(fields: [planId], references: [id])
+  planId String
+  identities OrganizationPlanIdentity[]
+  createdAt DateTime
+  activatedAt DateTime?
+  isActivated Boolean @default(true)
+  deactivatedAt DateTime?
+  isDeactivated Boolean @default(false)
+
+  @@id([organizationId, planId])
+}
+
+model OrganizationPlanIdentity {
+  id String @id @default(uuid())
+  organizationPlan OrganizationPlan @relation(fields: [organizationId, planId], references: [organizationId, planId])
+  organizationId String
+  planId String
+  identity Identity @relation(fields: [identityId], references: [id])
+  identityId String
+  createdAt DateTime
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+}
+
+model User {
+  id String @id @default(uuid())
+  identity Identity @relation(fields: [identityId], references: [id])
+  identityId String @unique
+  username String @unique
+  password String
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+  isDeleted Boolean @default(false)
+}

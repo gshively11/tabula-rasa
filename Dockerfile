@@ -25,6 +25,7 @@ FROM base as build
 WORKDIR /home/node/app
 
 # build the app
+RUN npx prisma generate
 RUN npx astro build
 RUN npx tsc -p tsconfig.node.json
 
@@ -47,6 +48,10 @@ WORKDIR /home/node/app
 # Add curl because it's useful
 RUN apk add --no-cache curl
 
+# overwrite the docker-entrypoint.sh from the node image with our own
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Switch to node user so we don't run as root
 USER node
 
@@ -55,4 +60,4 @@ COPY --from=pruner /home/node/app /home/node/app/
 
 EXPOSE 3000
 
-CMD ["node", "--max-old-space-size=200", "./dist_node/index.js"]
+CMD ["node", "--max-old-space-size=200", "./dist_node/src/server.js"]

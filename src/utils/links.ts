@@ -4,7 +4,7 @@
 
 import slugify from 'limax'
 
-import { SITE, AIBLOG } from '~/config.mjs'
+import { SITE, AIBLOG } from '~/frontend-config.mjs'
 import { trim } from '~/utils/utils'
 
 export const trimSlash = (s: string) => trim(trim(s, '/'))

@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import { defineConfig } from 'astro/config'
-import { SITE } from './src/config.mjs'
+import { SITE } from './src/frontend-config.mjs'
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs'
 import node from '@astrojs/node'
 

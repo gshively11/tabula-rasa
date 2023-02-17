@@ -1,5 +1,5 @@
 /**
- * Data used throughout the app, centralized in this file to make it easier to manage.
+ * Data used throughout the app frontend, centralized in this file to make it easier to manage.
  */
 
 import { getAbsoluteLink } from './utils/links'
