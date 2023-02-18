@@ -25,6 +25,9 @@ const options = {
     },
     servers: [
       {
+        url: 'https://ihopethis.works',
+      },
+      {
         url: 'http://localhost:3000',
       },
     ],
