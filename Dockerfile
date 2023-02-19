@@ -45,6 +45,8 @@ FROM node:19-alpine as app
 
 WORKDIR /home/node/app
 
+COPY --from=flyio/litefs:pr-277 /usr/local/bin/litefs /usr/local/bin/litefs
+
 # Add curl because it's useful
 RUN apk add --no-cache curl
 

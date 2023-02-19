@@ -12,6 +12,7 @@ processes = []
 
 [experimental]
   auto_rollback = true
+  enable_consul = true
 
 [[services]]
   internal_port = 3000
@@ -41,3 +42,7 @@ processes = []
   [[services.ports]]
     handlers = ["tls", "http"]
     port = 443
+
+[mounts]
+  source = "litefs"
+  destination = "/home/node/app/db"
