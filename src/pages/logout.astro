@@ -1,0 +1,6 @@
+---
+const cookieOptions = { domain: Astro.url.hostname, path: '/' }
+Astro.cookies.delete('tr_jwt', cookieOptions)
+Astro.cookies.delete('tr_un', cookieOptions)
+return Astro.redirect('/')
+---

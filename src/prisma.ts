@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, User } from '@prisma/client'
+import { Prisma, PrismaClient, User, UserClicks } from '@prisma/client'
 import type { Prisma as PrismaTypes } from '@prisma/client'
 
 let errorFormat: PrismaTypes.ErrorFormat | undefined
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 
 export type { PrismaTypes }
 
-export { Prisma, PrismaClient, User }
+export { Prisma, PrismaClient, User, UserClicks }
 
 export const prisma = new PrismaClient({
   errorFormat,

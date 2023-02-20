@@ -1,0 +1,84 @@
+---
+export interface Props {
+  action: string
+  redirect?: string
+  buttonText: string
+  secondaryUrl?: string
+  secondaryText: string
+}
+
+const {
+  action = await Astro.slots.render('action'),
+  buttonText = await Astro.slots.render('buttonText'),
+  redirect = await Astro.slots.render('redirect'),
+  secondaryUrl = await Astro.slots.render('secondaryUrl'),
+  secondaryText = await Astro.slots.render('secondaryText'),
+} = Astro.props
+---
+
+<form class="w-full max-w-lg" method="post" action={action}>
+  {redirect && <input type="hidden" name="redirect" id="redirect" value={redirect} />}
+  <div class="md:flex md:items-start mb-3">
+    <div class="md:w-1/3">
+      <label
+        class="block text-gray-500 dark:text-white font-bold md:text-right mb-2 md:mb-0 pr-4 pt-2"
+        for="username">Username</label
+      >
+    </div>
+    <div class="md:w-2/3">
+      <input
+        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
+        id="username"
+        name="username"
+        type="text"
+        pattern="[a-zA-Z0-9 _\-]{1,32}"
+        minlength="1"
+        maxlength="32"
+        placeholder="Enter a username"
+        required
+      />
+      <span
+        class="invisible peer-placeholder-shown:!invisible peer-invalid:visible text-red-500 text-sm"
+        >Username must be 1-32 letters, numbers, underscores, hyphens, or spaces</span
+      >
+    </div>
+  </div>
+  <div class="md:flex md:items-start mb-3">
+    <div class="md:w-1/3">
+      <label
+        class="block text-gray-500 dark:text-white font-bold md:text-right mb-2 md:mb-0 pr-4 pt-2"
+        for="password">Password</label
+      >
+    </div>
+    <div class="md:w-2/3">
+      <input
+        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
+        id="password"
+        name="password"
+        type="password"
+        placeholder="******************"
+        minlength="6"
+        maxlength="64"
+        required
+      />
+      <span
+        class="invisible peer-placeholder-shown:!invisible peer-invalid:visible text-red-500 text-sm"
+        >Password must be 6-64 characters</span
+      >
+    </div>
+  </div>
+
+  <div class="md:flex md:items-center my-6">
+    <div class="md:w-1/3"></div>
+    <div class="md:w-2/3 grid grid-cols-2 items-center">
+      <button class="btn btn-primary w-32">{buttonText}</button>
+      {
+        secondaryText && secondaryUrl && (
+          <a class="underline justify-self-end text-sm" href={secondaryUrl}>
+            {secondaryText}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</form>

@@ -9,6 +9,7 @@ import { defineConfig } from 'astro/config'
 import { SITE } from './src/frontend-config.mjs'
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs'
 import node from '@astrojs/node'
+import svelte from '@astrojs/svelte'
 
 // absolute path of the directory that houses this file
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -37,6 +38,7 @@ export default defineConfig({
       logger: 1,
       svg: false,
     }),
+    svelte(),
   ],
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],

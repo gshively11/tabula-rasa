@@ -1,8 +1,17 @@
 ---
-export const prerender = true
-
 import { SITE } from '~/frontend-config.mjs'
 import Layout from '~/layouts/PageLayout.astro'
+import Button from '~/components/thebutton/Button.svelte'
+import Leaderboard from '~/components/thebutton/Leaderboard.svelte'
+import ServerConnection from '~/components/thebutton/ServerConnection.svelte'
+
+let loggedIn = false
+
+if (Astro.cookies.has('tr_un') || Astro.cookies.has('tr_jwt')) {
+  loggedIn = true
+}
+
+const username = Astro.cookies.get('tr_un').value || 'friend'
 
 const meta = {
   title: SITE.title,
@@ -13,18 +22,33 @@ const meta = {
 
 <Layout {meta}>
   <section class="relative md:-mt-[76px]">
+    <ServerConnection client:idle />
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
       <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
-      <div class="py-12 md:py-20 lg:py-0 lg:flex lg:items-center lg:h-screen lg:gap-8">
-        <div class="basis-1/2 text-center lg:text-left pb-10 md:pb-16 mx-auto">
-          <h1
-            class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading dark:text-gray-200"
-          >
-            Coming Soon...
-          </h1>
+      <div class="py-6 md:py-10 grid grid-col-1 grid-row-2 gap-y-10">
+        <h1 id="welcome" class="opacity-0 mx-auto text-3xl font-mono text-center">
+          Welcome, {username}.
+        </h1>
+        <div class="flex flex-wrap justify-center">
+          <div class="pb-10 md:pb-16 md:mx-auto">
+            <Button loggedIn={loggedIn} client:load />
+          </div>
+          <div class="pb-10 md:pb-16 md:mt-10 md:mx-auto">
+            <Leaderboard client:idle />
+          </div>
         </div>
       </div>
     </div>
   </section>
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.querySelectorAll('#welcome').forEach((element) => {
+        element.classList.add('animate-fadein')
+      })
+    }, 1)
+  })
+</script>

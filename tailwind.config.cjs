@@ -14,6 +14,21 @@ module.exports = {
         serif: ['var(--aw-font-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading)', ...defaultTheme.fontFamily.sans],
       },
+      keyframes: {
+        fadein: {
+          '0%': {
+            opacity: 0,
+            transform: 'translate3d(0, 20px, 0)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translate3d(0, 0, 0)',
+          },
+        },
+      },
+      animation: {
+        fadein: '1s forwards 1 fadein',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

@@ -1,0 +1,31 @@
+---
+export const prerender = true
+
+import { SITE } from '~/frontend-config.mjs'
+import Layout from '~/layouts/PageLayout.astro'
+import LoginSignup from '~/components/widgets/LoginSignup.astro'
+
+const meta = {
+  title: SITE.title,
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+}
+---
+
+<Layout {meta}>
+  <section class="relative md:-mt-[76px]">
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
+      <div class="flex justify-center my-10 sm:my-20">
+        <LoginSignup
+          buttonText="Sign Up"
+          action="/api/v1/signup/"
+          redirect="/projects/the_button/"
+          secondaryUrl="/login/"
+          secondaryText="Login"
+        />
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -17,7 +17,7 @@ const CONFIG = {
   name: 'ihopethis.works',
   textDirection: 'ltr',
   title: 'ihopethis.works',
-  trailingSlash: false,
+  trailingSlash: true,
 }
 
 // Config for AI-generated Blog project
