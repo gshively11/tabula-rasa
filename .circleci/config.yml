@@ -51,8 +51,11 @@ jobs:
 workflows:
   app:
     when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+        and:
+          - not:
+              equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+          - not:
+              equal: [ api, << pipeline.trigger_source >> ]
     jobs:
       - test_and_build
       - deploy:
@@ -65,7 +68,9 @@ workflows:
               only: main
   weekly_blog_post:
     when:
-      equal: [ weekly_blog_post, << pipeline.schedule.name >> ]
+      or:
+        - equal: [ weekly_blog_post, << pipeline.schedule.name >> ]
+        - equal: [ api, << pipeline.trigger_source >> ]
     jobs:
       - publish_blog_post
       - test_and_build:
