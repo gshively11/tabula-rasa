@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Install dependencies"
+          command: "npm install"
+      - run:
           name: "Generate blog post"
           command: "npm run generate-blog-post"
       - run:
