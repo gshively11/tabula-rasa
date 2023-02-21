@@ -12,6 +12,8 @@ jobs:
       - run:
           name: "Generate blog post"
           command: "npm run generate-blog-post"
+          environment:
+            OPENAI_API_KEY: $openai_api_key
       - run:
           name: "Commit and push"
           command: |
@@ -46,7 +48,9 @@ jobs:
           command: "curl -L https://fly.io/install.sh | sh"
       - run:
           name: "Deploy"
-          command: "FLY_ACCESS_TOKEN=$flyio_api_token /home/circleci/.fly/bin/flyctl deploy"
+          command: "/home/circleci/.fly/bin/flyctl deploy"
+          environment:
+            FLY_ACCESS_TOKEN: $flyio_api_token
 
 workflows:
   app:
@@ -72,7 +76,9 @@ workflows:
         - equal: [ weekly_blog_post, << pipeline.schedule.name >> ]
         - equal: [ api, << pipeline.trigger_source >> ]
     jobs:
-      - publish_blog_post
+      - publish_blog_post:
+          context:
+            - openai
       - test_and_build:
           requires:
             - publish_blog_post
