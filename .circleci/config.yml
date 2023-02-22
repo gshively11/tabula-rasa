@@ -76,11 +76,3 @@ workflows:
       - publish_blog_post:
           context:
             - openai
-      - test_and_build:
-          requires:
-            - publish_blog_post
-      - deploy:
-          context:
-            - flyio
-          requires:
-            - test_and_build
