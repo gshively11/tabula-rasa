@@ -56,3 +56,8 @@ Flyctl uses the Dockerfile to build and deploy the project.
   prisma.ts  ------------ Provides db client
   server.ts  ------------ Main file for the API server
 ```
+
+### Dependencies
+
+- `limax` is locked at `2.1.0` because later versions have issues with building native dependencies
+- `svgo` is l ocked at `2.8.0` because later versions have issues with astro icons

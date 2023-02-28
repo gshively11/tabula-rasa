@@ -7,14 +7,14 @@
   "ignorePatterns": ["!.prettierrc.cjs"],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "exgtraFileExtensions": [".svelte"]
   },
-  "plugins": ["svelte3"],
+  "plugins": ["svelte"],
   "extends": [
     "eslint:recommended",
     "plugin:astro/jsx-a11y-recommended",
-    "plugin:astro/recommended",
-    "plugin:prettier/recommended"
+    "plugin:astro/recommended"
   ],
   "overrides": [
     {
@@ -50,11 +50,24 @@
       // Define the configuration for `<script>` tag.
       // Script in `<script>` is assigned a virtual file name with the `.js` extension.
       "files": ["**/*.astro/*.js", "*.astro/*.js"],
-      "parser": "@typescript-eslint/parser"
+      "parser": "@typescript-eslint/parser",
+      "rules": {
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          { "argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_" }
+        ]
+      }
     },
     {
       "files": ["*.svelte"],
-      "processor": "svelte3/svelte3"
+      "parser": "svelte-eslint-parser",
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser"
+      },
+      "rules": {
+        "no-inner-declarations": "off",
+        "no-unused-vars": "warn"
+      }
     }
   ]
 }

@@ -6,6 +6,7 @@
 
   let clickPushInterval
   let clickToken = ''
+  // used in a closure, false positive unused var
   let submittingClicks = false
 
   const socket = io()
@@ -23,10 +24,6 @@
         socket.emit('v1:the-button:clicks', currentClicks, clickToken)
       }
     }, 2000)
-  })
-
-  socket.on('v1:the-button:invalid-clicks', () => {
-    alert('nope')
   })
 
   socket.on('v1:the-button:next-token', (nextToken, clickCount) => {

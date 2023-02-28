@@ -20,7 +20,7 @@
       <span class="pr-2">Your Score:</span>
       <span class="font-bold">{$userScore}</span>
     </div>
-    <button class="thebutton text-white" on:click={handleClick}>
+    <button class="thebutton text-white select-none" on:click={handleClick}>
       <span class="thebutton-shadow" />
       <span class="thebutton-edge" />
       <span class="thebutton-front font-bold px-36 py-36 border-1 border-red-900">
@@ -30,7 +30,9 @@
       </span>
     </button>
   {:else}
-    <a class="btn btn-primary w-full sm:w-auto" href="/login/"> Login to play! </a>
+    <a class="btn btn-primary w-full sm:w-auto sm:mt-10 select-none" href="/signup/">
+      Sign up to play!
+    </a>
   {/if}
 </div>
 
