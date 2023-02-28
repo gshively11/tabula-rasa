@@ -1,9 +1,10 @@
 import express from 'express'
 
+import { login } from '../authentication.js'
 import { ExistingUserError } from '../../errors.js'
 import User from '../../models/User.js'
 
-const signup = express.Router()
+const signupRouter = express.Router()
 
 /**
  * @swagger
@@ -24,6 +25,26 @@ const signup = express.Router()
  *      example:
  *        username: foobar
  *        password: hunter2
+ *    NewUserWithLogin:
+ *      type: object
+ *      required:
+ *        - username
+ *        - password
+ *        - redirect
+ *      properties:
+ *        username:
+ *          type: string
+ *          description: Desired username for the user
+ *        password:
+ *          type: string
+ *          description: Desired password for the user
+ *        redirect:
+ *          type: string
+ *          description: URL to redirect to after login
+ *      example:
+ *        username: foobar
+ *        password: hunter2
+ *        redirect: https://ihopethis.works/projects/thebutton/
  *    User:
  *      type: object
  *      properties:
@@ -50,7 +71,10 @@ const signup = express.Router()
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/NewUser'
+ *            $ref: "#/components/schemas/NewUser"
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            $ref: "#/components/schemas/NewUserWithLogin"
  *    responses:
  *      200:
  *        description: The newly created user
@@ -60,23 +84,45 @@ const signup = express.Router()
  *              type: object
  *              properties:
  *                user:
- *                  $ref: '#/components/schemas/User'
+ *                  $ref: "#/components/schemas/User"
+ *      303:
+ *        description: Redirect to chosen location, logged in as the new user.
+ *        content:
+ *          text/html:
+ *            schema:
+ *              type: string
  *      403:
  *        description: The username is already taken
  *      500:
  *        description: Unexpected server error
  */
-signup.post('/', async (req, res) => {
+signupRouter.post('/', async (req, res) => {
   try {
     const user = await User.create(req.body.username, req.body.password)
     // destructure user to the subset we want in the response
     const response = (({ id, username, createdAt }) => ({ id, username, createdAt }))(user.model)
-    return res.json(response)
+
+    // if content type is json, just return the new user as json
+    if (req.is('application/json')) {
+      return res.json(response)
+    }
+
+    // if this req is coming from the signup form, attempt to login,
+    // and then redirect to the provided url, or the home page if
+    // one is not provided. the login method mutates the response.
+    const loggedIn = await login(res, user, req.body.password)
+
+    if (!loggedIn) {
+      return res.sendStatus(403)
+    }
+
+    return res.redirect(303, req.body.redirect || '/')
   } catch (err) {
     if (err instanceof ExistingUserError) {
       return res.sendStatus(403)
     }
+    throw err
   }
 })
 
-export default signup
+export default signupRouter
