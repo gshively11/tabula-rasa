@@ -1,18 +1,22 @@
 ---
+import { Icon } from 'astro-icon'
+
 export interface Props {
   action: string
   redirect?: string
   buttonText: string
   secondaryUrl?: string
   secondaryText: string
+  checkUsername?: string
 }
 
 const {
-  action = await Astro.slots.render('action'),
-  buttonText = await Astro.slots.render('buttonText'),
-  redirect = await Astro.slots.render('redirect'),
-  secondaryUrl = await Astro.slots.render('secondaryUrl'),
-  secondaryText = await Astro.slots.render('secondaryText'),
+  action,
+  buttonText,
+  redirect = '',
+  secondaryUrl = '',
+  secondaryText,
+  checkUsername = '',
 } = Astro.props
 ---
 
@@ -27,7 +31,8 @@ const {
     </div>
     <div class="md:w-2/3">
       <input
-        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
+        data-check-username={checkUsername}
+        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-11/12 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
         id="username"
         name="username"
         type="text"
@@ -37,6 +42,8 @@ const {
         placeholder="Enter a username"
         required
       />
+      <Icon name="noto:check-mark-button" id="username-ok" class="w-6 hidden" />
+      <Icon name="noto:hollow-red-circle" id="username-taken" class="w-6 hidden" />
       <span
         class="invisible peer-placeholder-shown:!invisible peer-invalid:visible text-red-500 text-sm"
         >Username must be 1-32 letters, numbers, underscores, hyphens, or spaces</span
@@ -52,7 +59,7 @@ const {
     </div>
     <div class="md:w-2/3">
       <input
-        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
+        class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-11/12 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
         id="password"
         name="password"
         type="password"
@@ -70,11 +77,11 @@ const {
 
   <div class="md:flex md:items-center my-6">
     <div class="md:w-1/3"></div>
-    <div class="md:w-2/3 grid grid-cols-2 items-center">
+    <div class="md:w-2/3 items-center">
       <button class="btn btn-primary w-32">{buttonText}</button>
       {
         secondaryText && secondaryUrl && (
-          <a class="underline justify-self-end text-sm" href={secondaryUrl}>
+          <a class="underline justify-self-end text-sm ml-10" href={secondaryUrl}>
             {secondaryText}
           </a>
         )
@@ -82,3 +89,45 @@ const {
     </div>
   </div>
 </form>
+
+<script>
+  function debounceInput(func: (_e: InputEvent) => void, delay = 250) {
+    let timerId: ReturnType<typeof setTimeout>
+
+    return function (this: HTMLInputElement, e: Event): void {
+      clearTimeout(timerId)
+      timerId = setTimeout(() => {
+        func.call(this, e as InputEvent)
+      }, delay)
+    }
+  }
+
+  function checkUsername(e: InputEvent): void {
+    const usernameInput = e.target as HTMLInputElement
+    const username = usernameInput.value
+    const usernameOk = document.querySelector('#username-ok') as HTMLElement
+    const usernameTaken = document.querySelector('#username-taken') as HTMLElement
+    if (!username || username.length === 0 || !username.match(/^[a-zA-Z0-9\-_\s]+$/)) {
+      usernameOk.style.display = 'none'
+      usernameTaken.style.display = 'none'
+      return
+    }
+    fetch(`/api/v1/username/${username}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.available) {
+          usernameOk.style.display = 'inline'
+          usernameTaken.style.display = 'none'
+        } else {
+          usernameOk.style.display = 'none'
+          usernameTaken.style.display = 'inline'
+        }
+      })
+  }
+
+  const usernameInput = document.querySelector('input#username') as HTMLInputElement
+
+  if (usernameInput.dataset.checkUsername) {
+    usernameInput.addEventListener('input', debounceInput(checkUsername))
+  }
+</script>

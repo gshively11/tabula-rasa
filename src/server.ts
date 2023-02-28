@@ -30,12 +30,24 @@ app.use(ssrHandler)
 // setup swagger UI and wire up the api specs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
 
+/**
+ * @swagger
+ *
+ * components:
+ *  securitySchemes:
+ *    cookieAuth:
+ *      type: apiKey
+ *      in: cookie
+ *      name: tr_jwt
+ */
 app.use(
   '/api',
   bodyParser.json(),
   bodyParser.urlencoded({ extended: true }),
   cookieParser(),
-  authentication.unless({ path: /(signup|login)\/?$/ }),
+  authentication.unless({
+    path: [/(signup|login)\/?$/, /username\/.+$/],
+  }),
   userContext,
   routes
 )

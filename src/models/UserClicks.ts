@@ -141,7 +141,7 @@ export class UserClicks {
       }
       const timeDiff = currentTimestamp - previousTimestamp
       // clicking too fast
-      if (timeDiff < 50) {
+      if (timeDiff < 5) {
         return {
           valid: false,
           reason: 'too fast',
