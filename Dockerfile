@@ -40,26 +40,25 @@ RUN npm prune --omit dev
 
 ##
 # App stage, ready for deploy
+# Must run as root for litefs to work
 #
 FROM node:19-alpine as app
 
 WORKDIR /home/node/app
 
-COPY --from=flyio/litefs:pr-277 /usr/local/bin/litefs /usr/local/bin/litefs
+COPY --from=flyio/litefs:main /usr/local/bin/litefs /usr/local/bin/litefs
 
 # Add curl because it's useful
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl fuse fuse3
 
 # overwrite the docker-entrypoint.sh from the node image with our own
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Switch to node user so we don't run as root
-USER node
-
 # copy the dependencies and dists from the builder stage
-COPY --from=pruner --chown=node /home/node/app /home/node/app/
+COPY --from=pruner /home/node/app /home/node/app/
 
 EXPOSE 3000
 
-CMD ["node", "--max-old-space-size=200", "./dist_node/src/server.js"]
+# see docker-entrypoint.sh for available commands
+CMD ["prep-litefs"]

@@ -1,4 +1,4 @@
-app = "tabula-rasa"
+app = "tabula-rasa-litefs"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
@@ -7,7 +7,7 @@ processes = []
   build-target = "app"
 
 [env]
-  DATABASE_URL = "file:../db/default.db"
+  DATABASE_URL = "file:/litefs/default.db"
   NODE_ENV = "production"
 
 [experimental]
@@ -45,4 +45,4 @@ processes = []
 
 [mounts]
   source = "litefs"
-  destination = "/home/node/app/db"
+  destination = "/var/lib/litefs"

@@ -36,6 +36,10 @@
     leaders.set(newLeaders)
   })
 
+  socket.on('v1:the-button:user-not-found', () => {
+    window.location.replace('/logout/')
+  })
+
   socket.on('disconnect', (reason) => {
     clearInterval(clickPushInterval)
 

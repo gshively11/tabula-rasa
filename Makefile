@@ -5,11 +5,11 @@ build:
 test:
 	@echo "Running tests on tabula-rasa"
 	@docker build --target base -t tabula-rasa:latest-base .
-	@docker run --rm --init --name tabula-rasa -e DATABASE_URL="file:../db/default.db" tabula-rasa:latest-base npm run test
+	@docker run --rm --init --name tabula-rasa -e DATABASE_URL="file:/litefs/default.db" tabula-rasa:latest-base npm run test
 
 run:
 	@echo "Running tabula-rasa..."
-	@docker run --rm --init --name tabula-rasa -p 3000:3000 -m 256m --cpus 0.75 -e NODE_ENV=production -e DATABASE_URL="file:../db/default.db" tabula-rasa:latest-app
+	@docker run --privileged --rm --init --name tabula-rasa -p 3000:3000 -m 256m --cpus 0.75 -e NODE_ENV=production -e DATABASE_URL="file:/litefs/default.db" -v ${PWD}/db:/litefs tabula-rasa:latest-app run-tabula-rasa
 
 shell:
 	@echo "Starting shell in tabula-rasa container..."

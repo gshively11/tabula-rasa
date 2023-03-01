@@ -1,3 +1,7 @@
+/**
+ * This file configurations TailwindCSS, a CSS framework.
+ * https://tailwindcss.com/
+ */
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
