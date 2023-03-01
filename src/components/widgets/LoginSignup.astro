@@ -8,6 +8,7 @@ export interface Props {
   secondaryUrl?: string
   secondaryText: string
   checkUsername?: string
+  formType: string
 }
 
 const {
@@ -17,7 +18,10 @@ const {
   secondaryUrl = '',
   secondaryText,
   checkUsername = '',
+  formType,
 } = Astro.props
+
+const passwordType = formType === 'login' ? 'current-password' : 'new-password'
 ---
 
 <form class="w-full max-w-lg" method="post" action={action}>
@@ -40,6 +44,7 @@ const {
         minlength="1"
         maxlength="32"
         placeholder="Enter a username"
+        autocomplete="username"
         required
       />
       <Icon name="noto:check-mark-button" id="username-ok" class="w-6 hidden" />
@@ -60,13 +65,14 @@ const {
     <div class="md:w-2/3">
       <input
         class="peer bg-gray-200 appearance-none border-2 border-gray-200 rounded w-11/12 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 placeholder-shown:!border-gray-200 invalid:border-red-500"
-        id="password"
+        id={passwordType}
         name="password"
         type="password"
         placeholder="******************"
         minlength="6"
         maxlength="64"
         required
+        autocomplete={passwordType}
       />
       <span
         class="invisible peer-placeholder-shown:!invisible peer-invalid:visible text-red-500 text-sm"

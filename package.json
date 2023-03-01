@@ -20,7 +20,8 @@
     "db-migrate": "prisma migrate dev",
     "db-reset": "prisma migrate reset",
     "db-deploy": "prisma migrate deploy",
-    "repl": "ts-node -P ./tsconfig.node.json -O '{\"module\": \"commonjs\"}'"
+    "repl": "ts-node -P ./tsconfig.node.json -O '{\"module\": \"commonjs\"}'",
+    "update-dependencies": "ncu -x limax -x svgo"
   },
   "repository": {
     "type": "git",
