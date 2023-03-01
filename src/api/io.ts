@@ -46,7 +46,16 @@ export default function setupIo(server: Express.Application) {
 
   // when a connection is established, wire up the handlers
   io.on('connection', async (socket: Socket) => {
-    await theButton(io, socket)
+    try {
+      await theButton(io, socket)
+    } catch (err) {
+      console.error(err)
+      try {
+        socket.emit('v1:the-button:server-error', 'server error')
+      } catch (innerErr) {
+        console.error(innerErr)
+      }
+    }
   })
 
   // send out leaderboard updates

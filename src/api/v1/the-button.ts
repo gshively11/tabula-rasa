@@ -16,7 +16,8 @@ export default async function theButton(io: Server, socket: Socket) {
     // get the current user
     const user = await User.findById(socket.data.userId)
     if (!user) {
-      throw new Error('unauthorized')
+      socket.emit('v1:the-button:user-not-found')
+      return
     }
     // get the current user click count and token
     const userClicks = await UserClicks.findByUserId(socket.data.userId)

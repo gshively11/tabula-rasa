@@ -1,6 +1,25 @@
 ---
-const cookieOptions = { domain: Astro.url.hostname, path: '/' }
-Astro.cookies.delete('tr_jwt', cookieOptions)
-Astro.cookies.delete('tr_un', cookieOptions)
+const expiredDate = new Date(0)
+
+// Must use set instead of delete, because delete
+// doesn't support httpOnly, secure, or sameSite
+// options (yet).
+Astro.cookies.set('tr_jwt', 'deleted', {
+  domain: Astro.url.hostname,
+  path: '/',
+  secure: true,
+  sameSite: true,
+  httpOnly: true,
+  expires: expiredDate,
+  maxAge: 0,
+})
+Astro.cookies.set('tr_un', 'deleted', {
+  domain: Astro.url.hostname,
+  path: '/',
+  secure: true,
+  expires: expiredDate,
+  maxAge: 0,
+})
+
 return Astro.redirect('/')
 ---
