@@ -65,24 +65,30 @@ function cleanOpenAiResponse(text) {
 async function generateBlogPost(openai) {
   console.log(`Generating a blog post on a random topic, this may take 10-30 seconds...`)
 
-  const completion = await openai.createCompletion({
+  const completion = await openai.createChatCompletion({
     max_tokens: 3500,
-    model: 'text-davinci-003',
-    prompt: `
-      Write a roughly 200 word blog post on a random topic.
-      The prose of the blog post should be written as if the author is a robot pretending to be a human, but it's obvious that it's a robot.
-      Come up with a 1 sentence description for an image that fits the theme of the blog post.
-      Your response must be in valid JSON format, and it must contain the following properties: title, description, excerpt, category, tags, body, imageDescription.
-      The excerpt should be 1 to 2 contiguous sentences from the blog post.
-      The description should be 1 to 3 sentences.
-      Use <br/> tags instead of new lines in response values.
-      Every key and value in the response should be wrapped in double quotes.
-      Category and tags must be all lower-case.
-    `,
+    model: 'gpt-3.5-turbo',
+    temperature: 1.2,
+    messages: [
+      {
+        role: 'user',
+        content: `
+          Write a roughly 200 word blog post on a random topic.
+          The author of the blog post should be a robot that is pretending to be human.
+          Your response must be in valid JSON format, and it must contain the following properties: title, description, excerpt, category, tags, body, imageDescription.
+          The excerpt should be 1 to 2 contiguous sentences from the blog post.
+          The description should be 1 to 2 sentences.
+          The imageDescription should be a 1 sentence description for an image that fits the theme of the blog post.
+          Use <br/> tags instead of new lines in response values.
+          Every key and value in the response should be wrapped in double quotes.
+          Category and tags must be all lower-case.
+        `,
+      },
+    ],
   })
 
   // clean up the response so that we can JSON parse it
-  const postText = cleanOpenAiResponse(completion.data.choices[0].text)
+  const postText = cleanOpenAiResponse(completion.data.choices[0].message.content)
 
   try {
     const post = JSON.parse(postText)
