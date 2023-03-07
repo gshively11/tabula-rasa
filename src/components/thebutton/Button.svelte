@@ -18,7 +18,7 @@
   {#if loggedIn}
     <div class="mx-auto pb-5">
       <span class="pr-2">Your Score:</span>
-      <span class="font-bold">{$userScore}</span>
+      <span id="your-score" class="font-bold">{$userScore}</span>
     </div>
     <button class="thebutton text-white select-none" on:click={handleClick}>
       <span class="thebutton-shadow" />

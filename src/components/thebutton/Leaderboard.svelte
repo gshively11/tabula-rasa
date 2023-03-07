@@ -10,7 +10,7 @@
   </h2>
   <div class="grid grid-cols-5 gap-2 tracking-wide auto-cols-auto">
     {#each $leaders as entry, i}
-      <span class="pr-3 text-right font-bold text-lg col-span-2">
+      <span class="pr-3 text-right font-bold text-lg col-span-2" id="score-{entry.username}">
         {entry.clickCount}
       </span>
       <span class="text-left text-md pt-0.5 col-span-3">

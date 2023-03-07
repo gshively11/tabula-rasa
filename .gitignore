@@ -117,3 +117,6 @@ dist_node
 
 # sqlite db
 default.db
+/test-results/
+/playwright-report/
+/playwright/.cache/

@@ -1,6 +1,5 @@
 /**
  * expected environment variables:
- *  DATABASE_URL
  *  JWT_SECRET
  *  OPENAI_API_KEY
  *  NODE_ENV

@@ -3,11 +3,7 @@
 set -e
 
 if [ "$*" = "prep-litefs" ]; then
-  if [ "$LITEFS_STATIC" = "1" ]; then
-    # need to use static leasining instead of consul when running locally
-    cp ./litefs-local.yml ./litefs.yml
-  fi
-  # ensure the database is up to date with all migrations
+  # mount litefs first, then rerun the entrypoint to start the app
   exec litefs mount -- sh ./docker-entrypoint.sh run-tabula-rasa
   exit $?
 fi
@@ -25,3 +21,16 @@ if [ "$*" = "shell" ]; then
   exec /bin/sh
   exit $?
 fi
+
+if [ "$*" = "e2e" ]; then
+  # create an empty file that sqlite will use for the database
+  mkdir /litefs
+  touch /litefs/default.db
+  # ensure the database is up to date and run any migrations that are needed
+  npm run db-deploy
+  # run the tests
+  exec npx playwright test
+  exit $?
+fi
+
+exec $@

@@ -71,9 +71,11 @@ Flyctl uses the Dockerfile to build and deploy the project.
   frontend-data.js  ----- DRYs up data used by the frontend
   prisma.ts  ------------ Provides db client
   server.ts  ------------ Main file for the API server
+/tests/  ---------------- End-to-end tests using Playwright
+  /__screenshots__/  ---- Stores Playwright screenshots. Mounted as a volume when running `make e2e`
 ```
 
 ### Dependencies
 
 - `limax` is locked at `2.1.0` because later versions have issues with building native dependencies
-- `svgo` is l ocked at `2.8.0` because later versions have issues with astro icons
+- `svgo` is locked at `2.8.0` because later versions have issues with astro icons

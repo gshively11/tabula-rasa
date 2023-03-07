@@ -26,6 +26,7 @@ jobs:
     steps:
       - setup_remote_docker:
           version: 20.10.14
+          docker_layer_caching: true
       - checkout
       - run:
           name: "Test"
@@ -37,6 +38,17 @@ jobs:
           root: ~/project
           paths:
             - .
+  e2e:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - checkout
+      - run:
+          name: "Test"
+          command: "make e2e-ci"
   deploy:
     docker:
       - image: cimg/base:current
@@ -59,11 +71,13 @@ workflows:
               equal: [ api, << pipeline.trigger_source >> ]
     jobs:
       - test_and_build
+      - e2e
       - deploy:
           context:
             - flyio
           requires:
             - test_and_build
+            - e2e
           filters:
             branches:
               only: main

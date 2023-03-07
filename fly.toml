@@ -7,7 +7,6 @@ processes = []
   build-target = "app"
 
 [env]
-  DATABASE_URL = "file:/litefs/default.db"
   NODE_ENV = "production"
 
 [experimental]
