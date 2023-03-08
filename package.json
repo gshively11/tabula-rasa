@@ -41,6 +41,7 @@
     "@astrolib/analytics": "^0.3.0",
     "@astrolib/seo": "^0.3.0",
     "@fontsource/inter": "^4.5.15",
+    "@playwright/test": "^1.31.2",
     "@tailwindcss/typography": "^0.5.9",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
