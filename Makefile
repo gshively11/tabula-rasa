@@ -35,7 +35,7 @@ e2e:
 e2e-ci:
 	@echo "Running E2E tests on tabula-rasa"
 	@docker build --target e2e -t tabula-rasa:latest-e2e .
-	@docker run --rm --init --name tabula-rasa -e JWT_SECRET=e2e tabula-rasa:latest-e2e e2e
+	@docker run --rm --init --name tabula-rasa -e JWT_SECRET=e2e -e CI=true tabula-rasa:latest-e2e e2e
 
 # Hack to fix ownership perms on tests/__screenshots__/, which is mounted to
 # docker and written to as root.
