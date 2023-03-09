@@ -24,6 +24,7 @@ API documentation is available via a [Swagger UI](https://ihopethis.works/api-do
 - [socket.io](https://socket.io/): A library for bi-directional communication over HTTP and WebSockets.
 - [nanostores](https://github.com/nanostores/nanostores): A tiny state manager that supports many web frameworks. We use it to share state between Svelte components.
 - [Swagger](https://swagger.io/): Tools to document and visualize APIs. We host a Swagger UI at [https://ihopethis.works/api-docs](https://ihopethis.works/api-docs)
+- [Playwright](https://playwright.dev/): End-to-end testing for web applications.
 
 ## Development
 
