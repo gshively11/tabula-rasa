@@ -1,7 +1,7 @@
 ##
 # base-builder stage, install dependencies needed to build the project.
 #
-FROM node:19-alpine AS base-builder
+FROM node:21-alpine AS base-builder
 
 WORKDIR /home/node/app
 
@@ -21,10 +21,7 @@ RUN apk upgrade --no-cache --available \
     && apk add --no-cache \
       chromium-swiftshader \
       ttf-freefont \
-      font-noto-emoji \
-    && apk add --no-cache \
-      --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-      font-wqy-zenhei
+      font-noto-emoji
 
 COPY local.conf /etc/fonts/local.conf
 
