@@ -33,4 +33,15 @@ if [ "$*" = "e2e" ]; then
   exit $?
 fi
 
+if [ "$*" = "e2e-update" ]; then
+  # create an empty file that sqlite will use for the database
+  mkdir /litefs
+  touch /litefs/default.db
+  # ensure the database is up to date and run any migrations that are needed
+  npm run db-deploy
+  # run the tests
+  exec npx playwright test -u
+  exit $?
+fi
+
 exec $@

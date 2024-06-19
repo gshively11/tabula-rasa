@@ -30,8 +30,14 @@ e2e:
 	@docker build --target e2e -t tabula-rasa:latest-e2e .
 	@docker run --rm --init --name tabula-rasa -v ${PWD}/tests/__screenshots__:/home/node/app/tests/__screenshots__ --network host -e JWT_SECRET=e2e tabula-rasa:latest-e2e e2e
 
+# Run E2E tests
+e2e-update:
+	@echo "Running E2E tests on tabula-rasa"
+	@docker build --target e2e -t tabula-rasa:latest-e2e .
+	@docker run --rm --init --name tabula-rasa -v ${PWD}/tests/__screenshots__:/home/node/app/tests/__screenshots__ --network host -e JWT_SECRET=e2e tabula-rasa:latest-e2e e2e-update
+
 # Run E2E tests in CI environments
-# In CI environments, we don't mount screenshots in a volume, and we don't run in hots nework mode
+# In CI environments, we don't mount screenshots in a volume, and we don't run in host network mode
 e2e-ci:
 	@echo "Running E2E tests on tabula-rasa"
 	@docker build --target e2e -t tabula-rasa:latest-e2e .
